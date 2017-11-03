@@ -17,11 +17,21 @@ app.get('/(:id', function(req, res) {
 
 // Get ShareJS dependencies
 var sharejs = require('share');
-require('redis');
+
+// Set up redis server
+var redisClient;
+console.log(process.env.REDISTOGO_URL);
+if (process.env.REDISTOGO_URL) {
+    var rtg = require("url").parse(proecss.env.REDISTOGO_URL);
+    redisClient = require("redis").createClient(rtg.port, rtg.hostname);
+    redisClient.auth(rtg.auth.split(":")[1]);
+} else {
+    redisClient = require("redis").createClient();
+}
 
 // Options for ShareJS
 var options = {
-    db: { type: 'redis' },
+    db: { type: 'redis', clientL redisClient },
 };
 
 // Attach the express server to ShareJS
