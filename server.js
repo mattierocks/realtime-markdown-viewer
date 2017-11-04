@@ -30,9 +30,9 @@ if (process.env.REDISTOGO_URL) {
 }
 
 // Options for ShareJS
-var options = {
-    db: { type: 'redis', client: redisClient }
-};
+// var options = {
+//     db: { type: 'redis', client: redisClient }
+// };
 
 // Attach the express server to ShareJS
 sharejs.server.attach(app, options);
